@@ -1,0 +1,75 @@
+mutation {
+  addCategory(name: "Router") {
+    id
+    name
+  }
+}
+
+mutation {
+  addLocation(name: "Gudang 1") {
+    id
+    name
+  }
+}
+
+mutation {
+  addSupplier(name: "PT Comtronics Systems", contact: "08123456789") {
+    id
+    name
+    contact
+  }
+}
+
+mutation {
+  addItem(
+    name: "Mikrotik RB450",
+    category_id: 1,
+    location_id: 1,
+    supplier_id: 1,
+    condition: "Baru"
+  ) {
+    id
+    name
+    condition
+  }
+}
+
+mutation {
+  updateStock(item_id: 1, quantity: 5) {
+    id
+    quantity
+    updated_at
+  }
+}
+
+query {
+  items {
+    id
+    name
+    condition
+    category {
+      name
+    }
+    location {
+      name
+    }
+    supplier {
+      name
+    }
+  }
+}
+
+query {
+  stock {
+    id
+    quantity
+    updated_at
+    item {
+      name
+    }
+  }
+}
+
+mutation {
+  deleteItem(id: 1)
+}
