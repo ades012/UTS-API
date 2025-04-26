@@ -49,7 +49,7 @@ inventory-api/
 
 ```bash
 git clone https://github.com/ades012/uts-api.git
-cd inventory-api
+cd UTS-API
 ```
 
 2. **Install dependencies:**
