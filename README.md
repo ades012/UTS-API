@@ -58,7 +58,7 @@ cd UTS-API
 npm install
 ```
 
-3. **Buat file **``** di root project dan isi:**
+3. **Buat file **.env** di root project dan isi:**
 
 ```env
 PORT=3000
