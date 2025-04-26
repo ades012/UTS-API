@@ -41,8 +41,6 @@ module.exports = `
     suppliers: [Supplier]
     supplier(id: ID!): Supplier
     stock: [Stock]
-    mutations: [MutationRecord]
-    transactions: [Transaction]
   }
 
   type Mutation {
