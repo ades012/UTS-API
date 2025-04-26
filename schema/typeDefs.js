@@ -31,24 +31,6 @@ module.exports = `
     updated_at: String
   }
 
-    type MutationRecord {
-    id: ID!
-    item: Item
-    fromLocation: Location
-    toLocation: Location
-    reason: String
-    date: String
-  }
-
-  type Transaction {
-    id: ID!
-    item: Item
-    quantity: Int
-    type: String
-    note: String
-    date: String
-  }
-
   type Query {
     items: [Item]
     item(id: ID!): Item
@@ -81,8 +63,5 @@ module.exports = `
     deleteSupplier(id: ID!): Boolean
 
     updateStock(item_id: Int!, quantity: Int!): Stock
-
-    recordMutation(item_id: Int!, from_location_id: Int!, to_location_id: Int!, reason: String!): MutationRecord
-    recordTransaction(item_id: Int!, quantity: Int!, type: String!, note: String): Transaction
   }
 `;

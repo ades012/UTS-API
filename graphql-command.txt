@@ -80,6 +80,7 @@ mutation {
     from_location_id: 1,
     to_location_id: 2,
     reason: "Pindah ke Bakorwil Cirebon"
+    date
   ) {
     id
     reason
@@ -96,3 +97,4 @@ mutation {
     }
   }
 }
+

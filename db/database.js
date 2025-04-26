@@ -37,29 +37,6 @@ CREATE TABLE IF NOT EXISTS stock (
   updated_at TEXT DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (item_id) REFERENCES items(id)
 );
-
-CREATE TABLE IF NOT EXISTS mutations (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  item_id INTEGER NOT NULL,
-  from_location_id INTEGER,
-  to_location_id INTEGER,
-  reason TEXT,
-  transaction_date TEXT DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (item_id) REFERENCES items(id),
-  FOREIGN KEY (from_location_id) REFERENCES locations(id),
-  FOREIGN KEY (to_location_id) REFERENCES locations(id)
-);
-
-CREATE TABLE IF NOT EXISTS transactions (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  item_id INTEGER NOT NULL,
-  quantity INTEGER,
-  transaction_type TEXT CHECK(type IN ('in', 'out', 'lost')),
-  note TEXT,
-  transaction_date TEXT DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (item_id) REFERENCES items(id)
-);
-
 `);
 
 module.exports = db;
