@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS mutations (
   from_location_id INTEGER,
   to_location_id INTEGER,
   reason TEXT,
-  date TEXT DEFAULT CURRENT_TIMESTAMP,
+  transaction_date TEXT DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (item_id) REFERENCES items(id),
   FOREIGN KEY (from_location_id) REFERENCES locations(id),
   FOREIGN KEY (to_location_id) REFERENCES locations(id)
@@ -54,9 +54,9 @@ CREATE TABLE IF NOT EXISTS transactions (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   item_id INTEGER NOT NULL,
   quantity INTEGER,
-  type TEXT CHECK(type IN ('in', 'out', 'lost')),
+  transaction_type TEXT CHECK(type IN ('in', 'out', 'lost')),
   note TEXT,
-  date TEXT DEFAULT CURRENT_TIMESTAMP,
+  transaction_date TEXT DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (item_id) REFERENCES items(id)
 );
 

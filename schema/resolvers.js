@@ -146,8 +146,8 @@ module.exports = {
       return { id: result.lastInsertRowid, item: { id: item_id }, quantity, updated_at: new Date().toISOString() };
     }
   },
-  recordMutation: ({ item_id, from_location_id, to_location_id, mutation_date }) => {
-    const stmt = db.prepare(`INSERT INTO mutations (item_id, from_location_id, to_location_id, date) VALUES (?, ?, ?, ?)`);
+  recordMutation: ({ item_id, from_location_id, to_location_id, reason, mutation_date }) => {
+    const stmt = db.prepare(`INSERT INTO mutations (item_id, from_location_id, to_location_id, reason, mutation_date) VALUES (?, ?, ?, ?)`);
     const result = stmt.run(item_id, from_location_id, to_location_id, mutation_date);
     return { id: result.lastInsertRowid, item_id, from_location_id, to_location_id, mutation_date };
   },
