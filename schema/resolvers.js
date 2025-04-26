@@ -54,6 +54,37 @@ module.exports = {
       item: { id: row.item_id, name: row.item_name }
     }));
   },
+
+  mutations: () => {
+    const stmt = db.prepare(`
+      SELECT m.*, i.name AS item_name, fl.name AS from_location_name, tl.name AS to_location_name
+      FROM mutations m
+      LEFT JOIN items i ON m.item_id = i.id
+      LEFT JOIN locations fl ON m.from_location_id = fl.id
+      LEFT JOIN locations tl ON m.to_location_id = tl.id
+    `);
+    return stmt.all().map(row => ({
+      id: row.id,
+      mutation_date: row.mutation_date,
+      item: { id: row.item_id, name: row.item_name },
+      from_location: { id: row.from_location_id, name: row.from_location_name },
+      to_location: { id: row.to_location_id, name: row.to_location_name }
+    }));
+  },
+  transactions: () => {
+    const stmt = db.prepare(`
+      SELECT t.*, i.name AS item_name
+      FROM transactions t
+      LEFT JOIN items i ON t.item_id = i.id
+    `);
+    return stmt.all().map(row => ({
+      id: row.id,
+      transaction_date: row.transaction_date,
+      transaction_type: row.transaction_type,
+      item: { id: row.item_id, name: row.item_name }
+    }));
+  },
+
   addItem: ({ name, category_id, location_id, supplier_id, condition }) => {
     const stmt = db.prepare(`INSERT INTO items (name, category_id, location_id, supplier_id, condition) VALUES (?, ?, ?, ?, ?)`);
     const result = stmt.run(name, category_id, location_id, supplier_id, condition);
@@ -106,8 +137,23 @@ module.exports = {
     return result.changes > 0;
   },
   updateStock: ({ item_id, quantity }) => {
-    const stmt = db.prepare(`INSERT INTO stock (item_id, quantity) VALUES (?, ?)`);
-    const result = stmt.run(item_id, quantity);
-    return { id: result.lastInsertRowid, item: { id: item_id }, quantity, updated_at: new Date().toISOString() };
-  }
+    const exists = db.prepare(`SELECT id FROM stock WHERE item_id = ?`).get(item_id);
+    if (exists) {
+      db.prepare(`UPDATE stock SET quantity = ?, updated_at = CURRENT_TIMESTAMP WHERE item_id = ?`).run(quantity, item_id);
+      return { id: exists.id, item: { id: item_id }, quantity, updated_at: new Date().toISOString() };
+    } else {
+      const result = db.prepare(`INSERT INTO stock (item_id, quantity, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP)`).run(item_id, quantity);
+      return { id: result.lastInsertRowid, item: { id: item_id }, quantity, updated_at: new Date().toISOString() };
+    }
+  },
+  recordMutation: ({ item_id, from_location_id, to_location_id, mutation_date }) => {
+    const stmt = db.prepare(`INSERT INTO mutations (item_id, from_location_id, to_location_id, mutation_date) VALUES (?, ?, ?, ?)`);
+    const result = stmt.run(item_id, from_location_id, to_location_id, mutation_date);
+    return { id: result.lastInsertRowid, item_id, from_location_id, to_location_id, mutation_date };
+  },
+  recordTransaction: ({ item_id, transaction_type, transaction_date }) => {
+    const stmt = db.prepare(`INSERT INTO transactions (item_id, transaction_type, transaction_date) VALUES (?, ?, ?)`);
+    const result = stmt.run(item_id, transaction_type, transaction_date);
+    return { id: result.lastInsertRowid, item_id, transaction_type, transaction_date };
+  },
 };
