@@ -41,6 +41,10 @@ inventory-api/
 └── README.md
 ```
 
+## ERD
+
+![ERD](assets/ERD.jpg)
+
 ---
 
 ## 🚀 Instalasi dan Menjalankan Project
