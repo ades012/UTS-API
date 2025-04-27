@@ -1,3 +1,7 @@
+# Link Video Presentasi
+
+https://drive.google.com/file/d/1j_D4d5yqBW80dT-HslbAb5Vl4IyOgAfH/view?usp=sharing
+
 # 📦 Inventory Management API
 
 Sistem manajemen inventaris perangkat jaringan, CCTV, dan telepon menggunakan **Node.js**, **GraphQL**, dan **SQLite**.
