@@ -66,6 +66,8 @@ module.exports = {
     return { id, name, category_id, location_id, supplier_id, condition };
   },
   deleteItem: ({ id }) => {
+    db.prepare(`DELETE FROM stock WHERE item_id = ?`).run(id);
+  
     const stmt = db.prepare(`DELETE FROM items WHERE id = ?`);
     const result = stmt.run(id);
     return result.changes > 0;
