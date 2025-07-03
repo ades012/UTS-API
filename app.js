@@ -17,3 +17,5 @@ app.use('/graphql', graphqlHTTP({
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server GraphQL berjalan di http://localhost:${PORT}/graphql`));
+
+//tambah tambah apakah masih konek ke git
